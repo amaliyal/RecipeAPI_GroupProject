@@ -121,10 +121,10 @@ def diet_requirement():
         diets_list.append(diet)
     # print(diets_list)
     results = search_recipe(ingredient)
+    components = []
     for result in results:
         recipe = result['recipe']
         count = 0
-        output_flag = False
         for i in recipe['healthLabels']:
             # print(i)
             for diet in diets_list:
@@ -133,11 +133,16 @@ def diet_requirement():
                     count += 1
                     # print(count)
         if count == no_diets:
+            print('---------------------------------------------------------------------------------------------------')
             print(recipe['label'])
+            print(recipe['url'])
             print(recipe['healthLabels'])
-            output_flag = True
-    if output_flag == False:
-        print("There is no recipe that fits all your requirements")
+            components = recipe['ingredients']
+            for i in components:
+                print(i['text'])
+            print()
+    if components == []:
+        print('There is no recipe that satisfies all the dietary requirements')
 # diet_requirement()
 
 def additional_ingredient():
